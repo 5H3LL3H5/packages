@@ -6,13 +6,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=0.107.16
+PKG_VERSION:=0.107.53
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=c41f8e9b9495b1684adcd1a9c0fe7af4a3ec225b19ced46fce477c4fb0db1ed4
+PKG_MIRROR_HASH:=d74702bc4f8b82bda64a0a937a98e73ee602c21b9361c0c683671212e03e9316
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
@@ -20,7 +20,7 @@ PKG_MAINTAINER:=Dobroslaw Kijowski <dobo90@gmail.com>
 
 PKG_BUILD_DEPENDS:=golang/host node/host node-yarn/host
 PKG_BUILD_PARALLEL:=1
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16
 
 GO_PKG:=github.com/AdguardTeam/AdGuardHome
 GO_PKG_BUILD_PKG:=github.com/AdguardTeam/AdGuardHome
@@ -56,7 +56,7 @@ endef
 define Build/Compile
 	( \
 		pushd $(PKG_BUILD_DIR) ; \
-		make js-deps js-build ; \
+		NODE_OPTIONS=--openssl-legacy-provider make js-deps js-build ; \
 		popd ; \
 		$(call GoPackage/Build/Compile) ; \
 	)

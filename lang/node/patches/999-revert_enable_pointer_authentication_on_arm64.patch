@@ -1,13 +1,10 @@
---- a/configure.py
-+++ b/configure.py
-@@ -1241,10 +1241,6 @@ def configure_node(o):
- 
-   o['variables']['want_separate_host_toolset'] = int(cross_compiling)
- 
--  # Enable branch protection for arm64
--  if target_arch == 'arm64':
--    o['cflags']+=['-msign-return-address=all']
--
-   if options.node_snapshot_main is not None:
-     if options.shared:
-       # This should be possible to fix, but we will need to refactor the
+--- a/node.gyp
++++ b/node.gyp
+@@ -1139,6 +1139,7 @@
+         'node.gypi'
+       ],
+       'libraries!':[ '-licui18n', '-licuuc', '-licudata', '-lcrypto', '-lssl', '-lz', '-lhttp_parser', '-luv', '-lnghttp2', '-lcares' ],
++      'cflags!': ['-mbranch-protection=standard'],
+       'include_dirs': [
+         'src',
+         'tools/msvs/genfiles',
